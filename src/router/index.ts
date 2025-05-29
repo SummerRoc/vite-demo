@@ -1,12 +1,19 @@
-import { createRouter, createWebHistory } from "vue-router";
-import type { RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
+import { menu } from './menu';
 
-// 使用 RouteRecordRaw 类型定义路由数组
-const routes: Array<RouteRecordRaw> = [
+const childrenRoutes: RouteRecordRaw[] = menu.map((item) => ({
+  path: item.url.replace(/^\//, ''),
+  name: item.label,
+  component: () => import(`@/views/${item.label}.vue`),
+}));
+
+const routes: RouteRecordRaw[] = [
   {
-    path: "/",
-    name: "Home",
-    component: () => import("@/views/Home.vue"),
+    path: '/',
+    name: 'Home',
+    component: () => import('@/views/Home.vue'),
+    children: childrenRoutes,
   },
   // {
   //  示例：动态路由参数

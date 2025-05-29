@@ -4,6 +4,11 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script setup lang="ts"></script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.app {
+  width: 100vw;
+  height: 100vh;
+}
+</style>
