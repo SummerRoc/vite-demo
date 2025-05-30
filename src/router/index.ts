@@ -4,8 +4,8 @@ import { menu } from './menu';
 
 const childrenRoutes: RouteRecordRaw[] = menu.map((item) => ({
   path: item.url.replace(/^\//, ''),
-  name: item.label,
-  component: () => import(`@/views/${item.label}.vue`),
+  name: item.prop,
+  component: () => import(`@/views/${item.prop}.vue`),
 }));
 
 const routes: RouteRecordRaw[] = [

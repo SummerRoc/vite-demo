@@ -7,6 +7,7 @@ import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import Inspect from 'vite-plugin-inspect';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pathSrc = path.resolve(__dirname, 'src');
@@ -23,6 +24,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    Inspect(),
     AutoImport({
       imports: ['vue'], // 自动导入 Vue 相关函数
       resolvers: [ElementPlusResolver()],
@@ -50,7 +52,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@use "@/styles/variables.scss";`,
+        additionalData: `@use "@/styles/mixins.scss" as *;`,
       },
     },
   },
