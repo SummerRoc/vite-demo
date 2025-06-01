@@ -1,7 +1,6 @@
 <template>
   <div class="sass-star-container">
     <div v-for="(item, index) in layer" :key="index" :class="item.class"></div>
-    <div class="title">Sass 星空</div>
   </div>
 </template>
 
@@ -69,13 +68,5 @@ $count: 1000;
   border-radius: 20px;
   overflow: hidden;
   @include flex-center;
-  .title {
-    background: linear-gradient(to bottom, #f9f9f9, #999999, #1a1a1a);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    font-size: 36px;
-    user-select: none;
-  }
 }
 </style>

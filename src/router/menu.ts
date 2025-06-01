@@ -10,4 +10,9 @@ export const menu: MenuItem[] = [
     url: '/sass-star',
     prop: 'SassStar',
   },
+  {
+    label: '文件分片',
+    url: '/file-sharding',
+    prop: 'FileSharding',
+  },
 ];
