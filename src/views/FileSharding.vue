@@ -3,57 +3,34 @@
     <el-upload
       v-model:file-list="fileList"
       class="upload-demo"
-      :action="action"
       multiple
-      :on-preview="handlePreview"
-      :on-remove="handleRemove"
-      :before-remove="beforeRemove"
-      :limit="3"
-      :on-exceed="handleExceed"
+      :auto-upload="false"
+      :limit="5"
     >
-      <el-button type="primary">Click to upload</el-button>
-      <template #tip>
-        <div class="el-upload__tip">jpg/png files with a size less than 500KB.</div>
-      </template>
+      <el-button type="primary">选择文件</el-button>
     </el-upload>
+    <el-button type="success" @click="handleUpload">开始上传</el-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { UploadProps, UploadUserFile } from 'element-plus';
-const action = ref('');
-const fileList = ref<UploadUserFile[]>([
-  {
-    name: 'element-plus-logo.svg',
-    url: 'https://element-plus.org/images/element-plus-logo.svg',
-  },
-  {
-    name: 'element-plus-logo2.svg',
-    url: 'https://element-plus.org/images/element-plus-logo.svg',
-  },
-]);
-
-const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
-  console.log(file, uploadFiles);
-};
-
-const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
-  console.log(uploadFile);
-};
-
-const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
-  ElMessage.warning(
-    `The limit is 3, you selected ${files.length} files this time, add up to ${
-      files.length + uploadFiles.length
-    } totally`
-  );
-};
-
-const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
-  return ElMessageBox.confirm(`Cancel the transfer of ${uploadFile.name} ?`).then(
-    () => true,
-    () => false
-  );
+import { nanoid } from 'nanoid';
+import type { UploadFile } from 'element-plus';
+import type { FileChunkItem } from '@/utils/types';
+import { cutFile } from '@/utils/tools';
+const fileList = ref<UploadFile[]>([]);
+const fileChunkList = ref<Array<FileChunkItem>>([]);
+const handleUpload = async () => {
+  fileChunkList.value = [];
+  for (const item of fileList.value) {
+    if (!item.raw) continue;
+    const chunks = await cutFile(item.raw);
+    fileChunkList.value.push({
+      key: nanoid(),
+      chunks,
+      fileName: item.name!,
+    });
+  }
 };
 </script>
 
